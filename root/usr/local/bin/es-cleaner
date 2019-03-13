@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 days=${1:-30}
 
 case $days in
