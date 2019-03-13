@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -e
+
+days=${1:-30}
+
+case $days in
+    ''|*[!0-9]*) days=30 ;;
+esac
+
+echo "Keeping last $days indices in elasticsearch"
+
+indices=(
+    "filebeat"
+    "heartbeat"
+    "metricbeat"
+    "packetbeat"
+)
+
+while true; do
+    for beat in "${indices[@]}"; do
+        elasticsearch-remove-old-indices.sh \
+            -e "http://elastic:9200" \
+            -g "$beat"
+    done
+    sleep 1d
+done
+
