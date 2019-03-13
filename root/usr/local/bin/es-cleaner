@@ -8,6 +8,14 @@ case $days in
     ''|*[!0-9]*) days=30 ;;
 esac
 
+echo "checking connection with elasticsearch"
+status=500
+while [[ $status -ne 200 ]]; do
+    status=$(curl -s -o /dev/null -w "%{http_code}" http://elasticsearch:9200)
+    echo -n '.'
+    sleep 1
+done
+
 echo "Keeping last $days indices in elasticsearch"
 
 indices=(
