@@ -20,7 +20,7 @@ indices=(
 while true; do
     for beat in "${indices[@]}"; do
         elasticsearch-remove-old-indices.sh \
-            -e "http://elastic:9200" \
+            -e "http://elasticsearch:9200" \
             -g "$beat"
     done
     sleep 1d
